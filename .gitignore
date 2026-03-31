@@ -180,7 +180,7 @@ venv.bak/
 # Project artifacts - DO NOT COMMIT
 # Data (large binary files)
 
-data/processed/
+processed
 *.csv
 *.parquet
 *.checkpoint
