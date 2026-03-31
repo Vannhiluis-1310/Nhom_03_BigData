@@ -1,0 +1,89 @@
+classification:
+  target: is_low_review
+  target_policy_version: v1_review_leq_3
+  positive_label: 1
+  fields:
+    items_per_order:
+      dtype: int
+      label: So luong san pham trong don
+      min: 1
+      max: 20
+      default: 2
+    unique_products_per_order:
+      dtype: int
+      label: So san pham khac nhau
+      min: 1
+      max: 20
+      default: 2
+    unique_categories_per_order:
+      dtype: int
+      label: So danh muc khac nhau
+      min: 1
+      max: 20
+      default: 1
+    max_payment_installments:
+      dtype: int
+      label: So ky tra gop
+      min: 1
+      max: 24
+      default: 1
+    same_state_any_seller_flag:
+      dtype: int
+      label: Co seller cung bang
+      options: [0, 1]
+      default: 1
+    customer_state:
+      dtype: str
+      label: Bang cua khach hang
+      default: SP
+    review_text:
+      dtype: str
+      label: Noi dung review
+      default: ""
+
+regression:
+  target: order_gmv
+  fields:
+    items_per_order:
+      dtype: int
+      label: So luong san pham trong don
+      min: 1
+      max: 20
+      default: 2
+    unique_products_per_order:
+      dtype: int
+      label: So san pham khac nhau
+      min: 1
+      max: 20
+      default: 2
+    unique_categories_per_order:
+      dtype: int
+      label: So danh muc khac nhau
+      min: 1
+      max: 20
+      default: 1
+    avg_product_weight_g:
+      dtype: float
+      label: Khoi luong trung binh san pham (gram)
+      min: 0.0
+      default: 800.0
+    max_payment_installments:
+      dtype: int
+      label: So ky tra gop
+      min: 1
+      max: 24
+      default: 1
+    same_state_any_seller_flag:
+      dtype: int
+      label: Co seller cung bang
+      options: [0, 1]
+      default: 1
+    customer_state:
+      dtype: str
+      label: Bang cua khach hang
+      default: SP
+    order_freight_value:
+      dtype: float
+      label: Phi van chuyen (tham khao)
+      min: 0.0
+      default: 18.0
