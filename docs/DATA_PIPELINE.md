@@ -14,6 +14,26 @@ Script này gọi lần lượt các bước:
 4. split gold thành `train/val/test`
 5. build features
 
+## Mapping file raw đầu vào
+
+Pipeline hiện hỗ trợ mapping file raw custom thông qua:
+
+- `config/raw_input_mapping.yaml`
+
+Ví dụ:
+
+```yaml
+orders: data/raw/test_orders_sample.csv
+customers: data/raw/olist_customers_dataset.csv
+order_items: data/raw/olist_order_items_dataset.csv
+```
+
+Ý nghĩa:
+
+- bạn không cần đổi tên file demo thành tên chuẩn
+- bạn có thể chỉ định file nào sẽ được dùng cho từng bảng raw
+- nếu một bảng không có trong file mapping, pipeline sẽ fallback về tên mặc định
+
 ## Chi tiết từng bước
 
 ### 1. Ingest raw
@@ -75,6 +95,7 @@ Ví dụ:
 
 - Upload file ở Admin chỉ lưu file vào `data/raw`
 - Upload không tự tạo `train/val/test`
+- Upload file tên lạ cũng chưa đủ để pipeline dùng nó; cần map file đó trong `config/raw_input_mapping.yaml`
 - Chỉ khi chạy preprocessing pipeline thì các tập split mới được rebuild
 - Retrain model luôn dùng các tập split hiện có trong `data/processed`
 
@@ -83,8 +104,9 @@ Ví dụ:
 Nếu người dùng upload một file raw mới hoặc một file có tính chất đặc biệt:
 
 1. lưu file vào `data/raw`
-2. chạy preprocessing pipeline
-3. kiểm tra lại `data/processed/gold` và `data/processed/features`
-4. sau đó mới retrain
+2. sửa `config/raw_input_mapping.yaml` để map file đó vào đúng bảng raw cần thay thế
+3. chạy preprocessing pipeline
+4. kiểm tra lại `data/processed/gold` và `data/processed/features`
+5. sau đó mới retrain
 
 Nếu bỏ qua bước preprocessing mà retrain ngay, model sẽ tiếp tục dùng split cũ.

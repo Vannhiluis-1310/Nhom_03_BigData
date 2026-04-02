@@ -38,7 +38,8 @@ section_header("1) Data Management")
 st.info(
     "Lưu ý: tải file lên chỉ lưu vào `data/raw`. Hệ thống chỉ tạo lại `train/val/test` "
     "khi bạn chạy `Chạy preprocessing pipeline`. Bước `Retrain model` sẽ dùng các tập split "
-    "đang có sẵn trong `data/processed`, không tự tách lại từ file vừa upload."
+    "đang có sẵn trong `data/processed`, không tự tách lại từ file vừa upload. "
+    "Nếu muốn dùng file custom để demo, hãy sửa `config/raw_input_mapping.yaml` trước khi chạy preprocessing."
 )
 uploads = st.file_uploader(
     "Tải file CSV/Parquet lên `data/raw`",
@@ -80,7 +81,8 @@ st.markdown(
 )
 st.caption(
     "Nếu bạn upload file mới hoặc file đặc biệt, hãy chạy preprocessing trước rồi mới retrain "
-    "để metrics `train/val/test` phản ánh đúng dữ liệu hiện tại."
+    "để metrics `train/val/test` phản ánh đúng dữ liệu hiện tại. "
+    "Pipeline sẽ ưu tiên đọc mapping trong `config/raw_input_mapping.yaml`."
 )
 
 if st.button("▶️ Chạy preprocessing pipeline", use_container_width=True):

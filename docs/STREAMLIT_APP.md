@@ -85,6 +85,7 @@ Trang này có 3 hành động chính:
 
 - upload không tự sinh `train/val/test`
 - retrain không tự split lại dữ liệu
+- nếu upload file tên lạ để demo, cần map file đó trong `config/raw_input_mapping.yaml`
 - nếu muốn metrics mới phản ánh file raw vừa upload, phải chạy preprocessing trước
 
 ## Gợi ý vận hành an toàn

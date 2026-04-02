@@ -14,6 +14,8 @@ FEATURES_DIR = PROCESSED_DIR / "features"
 MODELS_DIR = PROJECT_ROOT / "models"
 REPORTS_DIR = PROJECT_ROOT / "reports"
 MODEL_REGISTRY_PATH = MODELS_DIR / "registry.json"
+CONFIG_DIR = PROJECT_ROOT / "config"
+RAW_INPUT_MAPPING_PATH = CONFIG_DIR / "raw_input_mapping.yaml"
 
 TABLE_FILE_MAP = {
     "customers": "olist_customers_dataset.csv",

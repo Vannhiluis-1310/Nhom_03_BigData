@@ -87,6 +87,20 @@ Script này chạy tuần tự:
 4. split gold thành `train/val/test`
 5. build feature artifacts
 
+Trước khi chạy preprocessing, pipeline sẽ đọc cấu hình mapping raw input tại:
+
+- `config/raw_input_mapping.yaml`
+
+File này cho phép map từng bảng raw sang file thực tế bạn muốn dùng để demo.
+Ví dụ:
+
+```yaml
+orders: data/raw/test_orders_sample.csv
+customers: data/raw/olist_customers_dataset.csv
+```
+
+Nếu không khai báo custom mapping, pipeline sẽ fallback về tên file mặc định.
+
 ### 3. Retrain model
 
 Sau khi preprocessing xong, trang Admin sẽ gọi notebook/script retrain theo từng family:
@@ -101,6 +115,7 @@ Lưu ý quan trọng:
 
 - Upload file ở Admin chỉ lưu file vào `data/raw`
 - Bước upload không tự tạo `train/val/test`
+- Nếu file upload có tên lạ, pipeline chỉ dùng nó khi bạn map nó trong `config/raw_input_mapping.yaml`
 - Retrain luôn dùng các tập split hiện có trong `data/processed`
 - Nếu thay raw data hoặc upload file đặc biệt, cần chạy preprocessing trước rồi mới retrain
 
