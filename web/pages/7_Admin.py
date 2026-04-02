@@ -148,11 +148,9 @@ else:
             title="Thông tin model hiện tại",
         )
 
-use_new_only = st.checkbox("Chỉ dùng dữ liệu mới", value=False)
-tune_hyper = st.checkbox("Tinh chỉnh siêu tham số", value=False)
 if st.button("🔁 Retrain model", use_container_width=True):
     st.info(
-        f"Cấu hình retrain: family={family}, new_only={use_new_only}, tune={tune_hyper}. "
+        f"Cấu hình retrain: family={family}. "
         "Retrain sẽ dùng các tập split hiện có trong `data/processed`."
     )
     progress = st.progress(0)
