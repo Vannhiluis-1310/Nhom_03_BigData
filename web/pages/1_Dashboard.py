@@ -181,24 +181,9 @@ with left:
             "canceled": "#DD2436",  # Deep red
         }
 
-        # Define text colors for each status (pink tiles use dark text, red tiles use white)
-        text_colors = {
-            "delivered": "#2B0013",  # Black for light pink
-            "created": "#2B0013",  # Black for light pink
-            "approved": "#2B0013",  # Black for light pink
-            "invoiced": "#2B0013",  # Black for medium pink
-            "processing": "#2B0013",  # Black for pink-coral
-            "shipped": "#FFFFFF",  # White for coral red
-            "unavailable": "#FFFFFF",  # White for bright red
-            "canceled": "#FFFFFF",  # White for deep red
-        }
-
         # Add color columns
         status_pdf["color"] = status_pdf["order_status"].map(
             lambda x: status_colors.get(x.lower(), "#9ca3af")
-        )
-        status_pdf["text_color"] = status_pdf["order_status"].map(
-            lambda x: text_colors.get(x.lower(), "#FFFFFF")
         )
 
         # Calculate percentage for display
@@ -227,16 +212,12 @@ with left:
         # Ensure treemap uses our sort order (descending by count)
         fig_status.update_traces(sort=False)
 
-        # Update treemap appearance with per-cell text colors
-        # Get text colors in the same order as treemap cells
-        text_color_list = status_pdf["text_color"].tolist()
-
         fig_status.update_traces(
             texttemplate="<b>%{label}</b><br>%{value:,}<br>(%{customdata[0]}%)",
             textposition="middle center",
             textfont=dict(
                 size=14,
-                color=text_color_list,
+                color="#111111",
             ),
             hovertemplate="<b>%{label}</b><br>Số đơn: %{value:,}<br>Tỷ lệ: %{customdata[0]}%<extra></extra>",
         )

@@ -6,8 +6,8 @@ datasets:
   recommendation_interactions: data/processed/features/als_ready
   product_lookup: data/processed/silver/products
   customer_lookup: data/processed/silver/customers
-  classification_inference_base: data/processed/gold/classification_base
-  regression_inference_base: data/processed/gold/regression_base
+  classification_inference_base: data/processed/gold/classification_base_train
+  regression_inference_base: data/processed/gold/regression_base_train
   pattern_baskets: data/processed/features/fpgrowth_ready
   association_rules: reports/association_rules/association_rules
   frequent_itemsets: reports/association_rules/frequent_itemsets
@@ -30,7 +30,6 @@ models:
     decision_tree: models/regression/decision_tree
     random_forest_regressor: models/regression/random_forest
     random_forest: models/regression/random_forest
-    gbt_regressor: models/regression/gbt_regressor
   clustering:
     kmeans: models/clustering/kmeans
     bisecting_kmeans: models/clustering/bisecting_kmeans

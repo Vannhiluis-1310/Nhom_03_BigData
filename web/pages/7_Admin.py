@@ -35,8 +35,15 @@ st.caption(
 )
 
 section_header("1) Data Management")
+st.info(
+    "Lưu ý: tải file lên chỉ lưu vào `data/raw`. Hệ thống chỉ tạo lại `train/val/test` "
+    "khi bạn chạy `Chạy preprocessing pipeline`. Bước `Retrain model` sẽ dùng các tập split "
+    "đang có sẵn trong `data/processed`, không tự tách lại từ file vừa upload."
+)
 uploads = st.file_uploader(
-    "Upload file CSV/Parquet", type=["csv", "parquet"], accept_multiple_files=True
+    "Tải file CSV/Parquet lên `data/raw`",
+    type=["csv", "parquet"],
+    accept_multiple_files=True,
 )
 
 valid_files = []
@@ -47,8 +54,8 @@ if uploads:
             f"{up.name} | {'✅ Hợp lệ' if result.valid else '❌ Lỗi'}", expanded=False
         ):
             st.write(f"Kết quả: {result.message}")
-            st.write(f"Rows preview: {result.rows}")
-            st.write(f"Schema: {result.columns}")
+            st.write(f"Số dòng preview: {result.rows}")
+            st.write(f"Lược đồ cột: {result.columns}")
             if not result.preview.empty:
                 st.dataframe(result.preview, use_container_width=True)
         if result.valid:
@@ -64,12 +71,16 @@ if st.button(
 st.markdown("**Pipeline steps**")
 st.markdown(
     """
-    1. Load raw data
-    2. Clean data
-    3. Join tables
-    4. Feature engineering
-    5. Save to parquet
+    1. Đọc dữ liệu raw từ `data/raw`
+    2. Làm sạch và chuẩn hóa dữ liệu
+    3. Join bảng và build silver/gold
+    4. Tạo lại các tập `train/val/test`
+    5. Tạo feature artifacts và lưu parquet
     """
+)
+st.caption(
+    "Nếu bạn upload file mới hoặc file đặc biệt, hãy chạy preprocessing trước rồi mới retrain "
+    "để metrics `train/val/test` phản ánh đúng dữ liệu hiện tại."
 )
 
 if st.button("▶️ Chạy preprocessing pipeline", use_container_width=True):
@@ -128,18 +139,19 @@ else:
             {
                 "Tên model": row["model"],
                 "Phiên bản": "current",
-                "Training date": row["last_modified"],
-                "File path": row["path"],
+                "Thời gian cập nhật": row["last_modified"],
+                "Đường dẫn": row["path"],
                 "Metrics": row["metrics"],
             },
-            title="Current model info",
+            title="Thông tin model hiện tại",
         )
 
-use_new_only = st.checkbox("Use new data only", value=False)
-tune_hyper = st.checkbox("Tune hyperparameters", value=False)
+use_new_only = st.checkbox("Chỉ dùng dữ liệu mới", value=False)
+tune_hyper = st.checkbox("Tinh chỉnh siêu tham số", value=False)
 if st.button("🔁 Retrain model", use_container_width=True):
     st.info(
-        f"Cấu hình retrain: family={family}, new_only={use_new_only}, tune={tune_hyper}"
+        f"Cấu hình retrain: family={family}, new_only={use_new_only}, tune={tune_hyper}. "
+        "Retrain sẽ dùng các tập split hiện có trong `data/processed`."
     )
     progress = st.progress(0)
     progress_value = 0
@@ -162,9 +174,9 @@ if st.button("🔁 Retrain model", use_container_width=True):
             progress_value = min(95, progress_value + 10)
             progress.progress(progress_value)
     if not retrain_failed:
-        st.caption("Retrain complete with version snapshot.")
+        st.caption("Retrain hoàn tất và đã lưu snapshot version.")
 
-section_header("Model versioning")
+section_header("Quản lý phiên bản model")
 if family_df.empty:
     empty_state("Không có version để hiển thị.")
 else:
@@ -183,17 +195,17 @@ else:
     if version_df.empty:
         st.caption("Chưa có snapshot version.")
     else:
-        st.markdown("**Snapshot versions**")
+        st.markdown("**Các snapshot version**")
         st.dataframe(version_df, use_container_width=True, hide_index=True)
         rollback_choice = st.selectbox(
-            "Rollback version",
+            "Chọn version để rollback",
             options=version_df["version"].tolist(),
         )
-        if st.button("📦 Rollback to selected version"):
+        if st.button("📦 Rollback về version đã chọn"):
             try:
                 rollback_family_version(family, rollback_choice)
                 st.success(f"Rollback thành công về version: {rollback_choice}")
-                st.toast("Rollback complete")
+                st.toast("Rollback hoàn tất")
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Rollback thất bại: {exc}")
 

@@ -11,7 +11,7 @@ from pyspark.ml import Pipeline
 from pyspark.ml.feature import StandardScaler, VectorAssembler
 from pyspark.sql import DataFrame, functions as F
 
-from utils.config import resolve_dataset_path, resolve_model_path
+from utils.config import PROCESSED_DIR, resolve_model_path
 from utils.data_loader import DataLoader
 from utils.logger import get_logger
 from utils.model_loader import (
@@ -239,11 +239,7 @@ def _build_uploaded_features(raw_df: DataFrame) -> tuple[DataFrame, str | None]:
 
 def _load_precomputed_clustering_features() -> DataFrame:
     """Load precomputed clustering features to avoid broken saved FE pipeline artifacts."""
-    feat_path = (
-        resolve_dataset_path("rfm_customer_features").parents[1]
-        / "features"
-        / "clustering_fe"
-    )
+    feat_path = PROCESSED_DIR / "features" / "clustering_fe"
     if not feat_path.exists():
         raise FileNotFoundError(f"Khong tim thay clustering_fe tai: {feat_path}")
 
@@ -332,11 +328,7 @@ def _run_kmeans_offline_prediction(metadata: dict[str, Any]) -> ClusterResult:
         [_vector_struct_to_dense(x) for x in centers_pdf["clusterCenter"].tolist()]
     )
 
-    feat_path = (
-        resolve_dataset_path("rfm_customer_features").parents[1]
-        / "features"
-        / "clustering_fe"
-    )
+    feat_path = PROCESSED_DIR / "features" / "clustering_fe"
     feat_ds = ds.dataset(str(feat_path), format="parquet")
     feat_pdf = feat_ds.to_table(columns=["customer_unique_id", "features"]).to_pandas()
     if feat_pdf.empty:
@@ -428,11 +420,7 @@ def _run_bisecting_kmeans_offline_prediction(
         raise RuntimeError("Khong xac dinh duoc root node cua BisectingKMeans.")
     root_id = root_candidates[0]
 
-    feat_path = (
-        resolve_dataset_path("rfm_customer_features").parents[1]
-        / "features"
-        / "clustering_fe"
-    )
+    feat_path = PROCESSED_DIR / "features" / "clustering_fe"
     feat_parts = sorted(feat_path.glob("part-*.parquet"))
     if not feat_parts:
         raise RuntimeError("Khong doc duoc clustering_fe cho fallback BisectingKMeans.")

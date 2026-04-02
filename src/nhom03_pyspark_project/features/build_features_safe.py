@@ -261,7 +261,12 @@ def build_features_safe(
         "order_gmv", "label"
     )
 
-    clustering_base = spark.read.parquet(str(gold_dir / "clustering_base"))
+    clustering_train_base = spark.read.parquet(str(gold_dir / "clustering_base_train"))
+    clustering_val_base = spark.read.parquet(str(gold_dir / "clustering_base_val"))
+    clustering_test_base = spark.read.parquet(str(gold_dir / "clustering_base_test"))
+    clustering_base = clustering_train_base.unionByName(clustering_val_base).unionByName(
+        clustering_test_base
+    )
     cnum = ["recency_days", "frequency_orders", "monetary_value", "avg_items_per_order"]
     c_asm = VectorAssembler(
         inputCols=cnum, outputCol="features_raw", handleInvalid="skip"
@@ -270,7 +275,16 @@ def build_features_safe(
         inputCol="features_raw", outputCol="features", withMean=False, withStd=True
     )
     c_pipe2 = Pipeline(stages=[c_asm, c_scale])
-    c_model2 = c_pipe2.fit(clustering_base)
+    c_model2 = c_pipe2.fit(clustering_train_base)
+    clustering_train = c_model2.transform(clustering_train_base).select(
+        "customer_unique_id", "features"
+    )
+    clustering_val = c_model2.transform(clustering_val_base).select(
+        "customer_unique_id", "features"
+    )
+    clustering_test = c_model2.transform(clustering_test_base).select(
+        "customer_unique_id", "features"
+    )
     clustering_fe = c_model2.transform(clustering_base).select(
         "customer_unique_id", "features"
     )
@@ -316,6 +330,9 @@ def build_features_safe(
         "regression_val": r_val_fe,
         "regression_test": r_test_fe,
         "clustering_fe": clustering_fe,
+        "clustering_train": clustering_train,
+        "clustering_val": clustering_val,
+        "clustering_test": clustering_test,
         "als_train": als_train,
         "als_val": als_val,
         "als_test": als_test,

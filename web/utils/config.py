@@ -134,7 +134,6 @@ def expected_models() -> dict[str, list[str]]:
             "linear_regression",
             "decision_tree_regressor",
             "random_forest_regressor",
-            "gbt_regressor",
         ],
         "clustering": ["kmeans", "bisecting_kmeans", "gaussian_mixture"],
         "recommendation": ["als"],

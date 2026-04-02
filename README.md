@@ -1,84 +1,155 @@
-# Olist BigData Streamlit Demo
+# Nhom03 BigData Olist Project
 
-## 1. Giới thiệu hệ thống
+Hệ thống phân tích dữ liệu và demo vận hành cho bộ dữ liệu Olist, xây dựng bằng `PySpark + Streamlit`.
 
-Đây là hệ thống demo end-to-end cho đồ án Olist, xây dựng bằng **Streamlit multipage + PySpark**.
-Ứng dụng kết nối trực tiếp tới dữ liệu parquet đã xử lý và model Spark MLlib đã train, phục vụ:
+Project này có 2 phần chính:
 
-- Dashboard vận hành
-- Phân khúc khách hàng (clustering)
-- Gợi ý sản phẩm (ALS)
-- Dự đoán classification/regression
-- Khai phá luật kết hợp (FP-Growth output)
-- EDA & xu hướng
-- Admin quản trị pipeline/model
+- Pipeline xử lý dữ liệu từ `raw -> bronze -> silver -> gold -> features`
+- Ứng dụng Streamlit để xem dashboard, clustering, recommendation, prediction, pattern mining, EDA và quản trị pipeline/model
 
-## 2. Project structure
+## Tài liệu nhanh
+
+- [Tổng quan tài liệu](docs/README.md)
+- [Kiến trúc project](docs/PROJECT_ARCHITECTURE.md)
+- [Luồng dữ liệu và pipeline](docs/DATA_PIPELINE.md)
+- [Tài liệu ứng dụng Streamlit](docs/STREAMLIT_APP.md)
+- [Theo dõi lỗi](docs/ERROR_TRACKER.md)
+- [Theo dõi tiến độ](docs/PROGRESS_TRACKER.md)
+- [Hướng dẫn UV](docs/HUONG_DAN_UV.md)
+
+## Chức năng chính
+
+- Dashboard vận hành đơn hàng
+- Phân khúc khách hàng bằng clustering
+- Gợi ý sản phẩm bằng ALS
+- Dự đoán classification và regression
+- Khai phá luật kết hợp bằng FP-Growth
+- EDA và phân tích xu hướng
+- Admin để upload raw data, chạy preprocessing, retrain model và theo dõi trạng thái hệ thống
+
+## Cấu trúc thư mục
 
 ```text
-Nhom03_PySpark_ProjectCuoiKy/
+Nhom03_BigDataCuoiKy_Update_01/
 ├── data/
-│   ├── raw/
+│   ├── raw/                  # File đầu vào do người dùng đưa vào
+│   ├── bronze/               # Raw đã ingest
 │   └── processed/
-├── models/
-├── notebooks/
-├── reports/
-├── src/
-├── web/
-│   ├── Home.py
-│   ├── config/
-│   ├── pages/
-│   ├── services/
-│   ├── utils/
-│   └── README.md
+│       ├── silver/           # Bảng làm sạch, chuẩn hóa
+│       ├── gold/             # Dataset cho từng bài toán
+│       └── features/         # Feature artifacts và pipeline ML
+├── docs/                     # Tài liệu dự án
+├── models/                   # Spark ML artifacts
+├── notebooks/                # Notebook train/evaluate theo từng bài toán
+├── reports/                  # Metrics, báo cáo tổng hợp, output pattern mining
+├── src/nhom03_pyspark_project/
+│   ├── data/                 # Ingest, silver, gold, split
+│   ├── features/             # Build feature pipeline
+│   └── spark.py              # Khởi tạo SparkSession
+├── web/                      # Streamlit multipage app
 └── requirements.txt
 ```
 
-## 3. Cách cài đặt
+## Cài đặt
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Cách chạy Streamlit app
+Nếu dùng môi trường ảo, cần kích hoạt môi trường trước khi chạy.
+
+## Cách chạy app
 
 ```bash
 streamlit run web/Home.py
 ```
 
-## 5. Cách đặt data/model artifacts
+## Luồng chạy chuẩn của project
 
-Registry tập trung tại `web/config/model_registry.yaml`.
+### 1. Nạp dữ liệu raw
 
-- App ưu tiên đọc artifact theo mapping trong file này.
-- Khi đường dẫn thực tế khác chuẩn mong muốn, chỉ cần sửa registry.
-- Không hard-code rải rác trong page.
+- Đưa file vào `data/raw`
+- Có thể làm trực tiếp hoặc dùng trang Admin để upload
 
-Ví dụ mapping đã có sẵn:
+### 2. Chạy preprocessing
+
+Lệnh thực tế được gọi từ Admin là script:
+
+```bash
+python src/nhom03_pyspark_project/data/run_data_pipeline.py
+```
+
+Script này chạy tuần tự:
+
+1. ingest raw vào bronze
+2. build silver tables
+3. build gold datasets
+4. split gold thành `train/val/test`
+5. build feature artifacts
+
+### 3. Retrain model
+
+Sau khi preprocessing xong, trang Admin sẽ gọi notebook/script retrain theo từng family:
+
+- `classification`
+- `regression`
+- `clustering`
+- `recommendation`
+- `pattern_mining`
+
+Lưu ý quan trọng:
+
+- Upload file ở Admin chỉ lưu file vào `data/raw`
+- Bước upload không tự tạo `train/val/test`
+- Retrain luôn dùng các tập split hiện có trong `data/processed`
+- Nếu thay raw data hoặc upload file đặc biệt, cần chạy preprocessing trước rồi mới retrain
+
+## Các dataset/artifact đang được app dùng
+
+Đường dẫn được quản lý tập trung ở:
+
+- `web/config/model_registry.yaml`
+
+App không hard-code path trong từng page; nếu artifact thực tế đổi vị trí, chỉ cần sửa registry.
+
+Ví dụ:
 
 - `dashboard_base -> data/processed/silver/master_orders`
-- `classification_inference_base -> data/processed/gold/classification_base`
-- `association_rules -> reports/association_rules/association_rules`
+- `classification_inference_base -> data/processed/gold/classification_base_train`
+- `regression_inference_base -> data/processed/gold/regression_base_train`
+- `rfm_customer_features -> logical dataset của clustering`
 
-## 6. Cách retrain từ Admin
+Ghi chú về dữ liệu clustering:
 
-Trên trang `7_Admin`:
+- Repo hiện có `clustering_base_train`, `clustering_base_val`, `clustering_base_test`
+- App đã được chỉnh để hiểu `rfm_customer_features` như một logical dataset ghép từ các split này khi cần
 
-1. Upload dữ liệu mới vào `data/raw`.
-2. Chạy preprocessing pipeline.
-3. Chọn model family và chạy retrain (thông qua notebook tương ứng).
-4. Theo dõi progress/log trực tiếp trên UI.
+## Những điểm cần hiểu đúng khi dùng Admin
 
-## 7. Các giả định quan trọng
+- `Chạy preprocessing pipeline`: rebuild dữ liệu processed và split
+- `Retrain model`: train lại model từ dữ liệu processed hiện có
+- `Tạo báo cáo metrics`: tổng hợp lại báo cáo từ artifact và metrics JSON
 
-1. Spark chạy local được (`local[2]`).
-2. Model artifacts là Spark saved model (có thư mục `metadata/`).
-3. Một số model có thể chưa tồn tại trong repo hiện tại; app sẽ báo lỗi thân thiện.
-4. Metadata/metrics ưu tiên lấy từ `reports/model_metrics/*.json` và spark metadata.
-5. Feature schema inference ưu tiên từ `feature_schemas.yaml` và pipeline metadata.
+Vì vậy nếu UI đang hiển thị `train_rows`, `val_rows`, `test_rows`, đó là số liệu lấy từ metrics/report sau khi preprocessing + retrain hoàn tất, không phải do bước upload tự sinh ra.
 
-## 8. Các giới hạn hiện tại
+## Trạng thái hiện tại của project
 
-- Một số target UI chưa có model riêng (ví dụ repeat customer, delivery_days) nên dùng fallback.
-- Pattern mining lọc threshold thấp hơn ngưỡng train có thể thiếu rule, cần retrain để đầy đủ.
-- Feature importance cho model nhiều chiều (text hashing) chỉ mang tính tham khảo.
+Project đang được tổ chức theo hướng demo vận hành nội bộ:
+
+- Spark chạy local
+- Model là Spark ML saved artifacts
+- Streamlit đọc trực tiếp parquet/model từ local filesystem
+- Một số chỗ có fallback để chịu được artifact hoặc dữ liệu không hoàn toàn đồng nhất
+
+## Hạn chế hiện tại
+
+- Chưa có API service riêng, toàn bộ đang chạy trong Streamlit + Spark local
+- Một số mô hình trong UI trước đây từng được khai báo rộng hơn artifact thực tế; project đã được dọn lại theo artifact hiện có
+- Một số logic hiển thị vẫn phụ thuộc vào metrics JSON/report sinh từ notebook
+- Với dữ liệu mới hoặc file raw đặc biệt, cần chạy lại preprocessing để đồng bộ hoàn toàn toàn bộ app
+
+## Gợi ý đọc tiếp
+
+- Muốn hiểu tổng thể project: [docs/PROJECT_ARCHITECTURE.md](docs/PROJECT_ARCHITECTURE.md)
+- Muốn hiểu data pipeline: [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md)
+- Muốn hiểu các trang Streamlit: [docs/STREAMLIT_APP.md](docs/STREAMLIT_APP.md)

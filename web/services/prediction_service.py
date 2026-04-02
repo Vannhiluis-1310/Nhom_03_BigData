@@ -39,7 +39,6 @@ REGRESSION_MODELS = [
     "LinearRegression",
     "DecisionTreeRegressor",
     "RandomForestRegressor",
-    "GBTRegressor",
 ]
 
 SUPPORTED_TARGETS = {

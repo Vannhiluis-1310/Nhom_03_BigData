@@ -18,17 +18,39 @@ class DataLoader:
     """Unified data loading utilities for parquet artifacts."""
 
     @staticmethod
+    def _split_fallback_paths(dataset_key: str) -> list[Path]:
+        if dataset_key != "rfm_customer_features":
+            return []
+        base_dir = resolve_dataset_path(dataset_key).parent
+        candidates = [
+            base_dir / "clustering_base_train",
+            base_dir / "clustering_base_val",
+            base_dir / "clustering_base_test",
+        ]
+        return [path for path in candidates if path.exists()]
+
+    @staticmethod
     def dataset_path(dataset_key: str) -> Path:
         return resolve_dataset_path(dataset_key)
 
     @staticmethod
     def dataset_exists(dataset_key: str) -> bool:
-        return DataLoader.dataset_path(dataset_key).exists()
+        path = DataLoader.dataset_path(dataset_key)
+        return path.exists() or bool(DataLoader._split_fallback_paths(dataset_key))
 
     @staticmethod
     def load_spark_df(dataset_key: str, required: bool = True) -> DataFrame:
         path = DataLoader.dataset_path(dataset_key)
         if not path.exists():
+            fallback_paths = DataLoader._split_fallback_paths(dataset_key)
+            if fallback_paths:
+                logger.info(
+                    "Doc du lieu parquet tu split fallback cho %s: %s",
+                    dataset_key,
+                    ", ".join(str(item) for item in fallback_paths),
+                )
+                spark = get_spark()
+                return spark.read.parquet(*[str(item) for item in fallback_paths])
             msg = f"Khong tim thay dataset '{dataset_key}' tai: {path}"
             logger.error(msg)
             if required:
@@ -105,11 +127,17 @@ class DataLoader:
         rows: list[dict[str, str]] = []
         for key in expected_data_keys():
             path = DataLoader.dataset_path(key)
+            fallback_paths = DataLoader._split_fallback_paths(key)
+            exists = path.exists() or bool(fallback_paths)
             rows.append(
                 {
                     "dataset": key,
-                    "path": str(path),
-                    "status": "San sang" if path.exists() else "Thieu",
+                    "path": (
+                        str(path)
+                        if path.exists() or not fallback_paths
+                        else " + ".join(str(item) for item in fallback_paths)
+                    ),
+                    "status": "San sang" if exists else "Thieu",
                 }
             )
         return pd.DataFrame(rows)

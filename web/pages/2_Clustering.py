@@ -30,16 +30,19 @@ st.caption(
     "Sử dụng model clustering đã train sẵn để gán cụm và phân tích hồ sơ khách hàng."
 )
 
+FIXED_CLUSTER_K = 6
+
 with st.sidebar:
     st.subheader("Cấu hình phân cụm")
     model_label = st.selectbox(
         "Chọn model", ["KMeans", "BisectingKMeans", "GaussianMixture"]
     )
-    selected_k = st.slider("Số cụm k", 2, 10, 6)
-    max_iter = st.slider("maxIter", 10, 200, 50)
-    seed = st.number_input("Seed", min_value=0, value=42, step=1)
+    st.metric("Số cụm k", FIXED_CLUSTER_K)
+    st.caption("Số cụm được cố định theo artifact đã train để tránh lỗi lệch cấu hình.")
+    max_iter = st.slider("Số vòng lặp tối đa", 10, 200, 50)
+    seed = st.number_input("Giá trị seed", min_value=0, value=42, step=1)
     uploaded_file = st.file_uploader(
-        "Upload CSV để phân cụm",
+        "Tải lên file CSV để phân cụm",
         type=["csv"],
         help=(
             "CSV có thể gồm customer_unique_id để map theo dữ liệu hệ thống, "
@@ -53,14 +56,14 @@ try:
             uploaded_pdf = pd.read_csv(uploaded_file)
             result = run_clustering_prediction_from_upload(
                 model_label,
-                selected_k,
+                FIXED_CLUSTER_K,
                 int(max_iter),
                 int(seed),
                 uploaded_pdf,
             )
         else:
             result = run_clustering_prediction(
-                model_label, selected_k, int(max_iter), int(seed)
+                model_label, FIXED_CLUSTER_K, int(max_iter), int(seed)
             )
 except FileNotFoundError as exc:
     error_state("Thiếu model clustering hoặc dữ liệu RFM.", str(exc))
@@ -71,7 +74,7 @@ except ValueError as exc:
 except Exception as exc:  # noqa: BLE001
     if "schema Parquet" in str(exc) or "nested parquet layout" in str(exc):
         error_state(
-            "Artifact model clustering khong tuong thich voi UI hien tai.",
+            "Artifact model clustering không tương thích với UI hiện tại.",
             str(exc),
         )
         st.stop()
@@ -113,7 +116,7 @@ scatter_fig = px.scatter(
     y="monetary_value",
     color="cluster",
     hover_data=["customer_unique_id", "frequency_orders"],
-    title="Recency vs Monetary theo cụm",
+    title="Phân bố Recency và Monetary theo cụm",
 )
 scatter_fig.update_layout(xaxis_title="Recency (ngày)", yaxis_title="Monetary (R$)")
 st.plotly_chart(scatter_fig, use_container_width=True)
@@ -146,7 +149,7 @@ heatmap_fig = px.imshow(
     text_auto=".2f",
     aspect="auto",
     color_continuous_scale=PALETTE_CONTINUOUS,
-    title="Giá trị trung bình RFM theo cluster",
+    title="Giá trị trung bình RFM theo cụm",
 )
 st.plotly_chart(heatmap_fig, use_container_width=True)
 
@@ -156,10 +159,10 @@ for cluster_id, profile_text in result.profiles.items():
         row = result.summary_pdf[result.summary_pdf["cluster"] == cluster_id].head(1)
         if not row.empty:
             st.write(
-                f"Số KH: {int(row['so_khach_hang'].iloc[0])} | "
-                f"Avg Revenue: {row['avg_revenue'].iloc[0]:.2f} | "
-                f"Avg Orders: {row['avg_orders'].iloc[0]:.2f} | "
-                f"Avg Recency: {row['avg_recency'].iloc[0]:.2f}"
+                f"Số khách hàng: {int(row['so_khach_hang'].iloc[0])} | "
+                f"Doanh thu trung bình: {row['avg_revenue'].iloc[0]:.2f} | "
+                f"Số đơn trung bình: {row['avg_orders'].iloc[0]:.2f} | "
+                f"Recency trung bình: {row['avg_recency'].iloc[0]:.2f}"
             )
 
 model_info_card(
@@ -168,8 +171,8 @@ model_info_card(
         "k từ metadata": result.metadata.get("paramMap", {}).get(
             "k", result.metadata.get("k", "-")
         ),
-        "Silhouette": result.metadata.get("silhouette", "-"),
-        "Rows train": result.metadata.get("rows", "-"),
+        "Điểm silhouette": result.metadata.get("silhouette", "-"),
+        "Số dòng train": result.metadata.get("rows", "-"),
     },
     title="Thông tin model clustering",
 )
