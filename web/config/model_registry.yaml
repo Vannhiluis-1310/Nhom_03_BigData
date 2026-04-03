@@ -1,0 +1,82 @@
+datasets:
+  master_orders: data/processed/silver/master_orders
+  dashboard_base: data/processed/silver/master_orders
+  eda_base: data/processed/silver/master_orders
+  rfm_customer_features: data/processed/gold/clustering_base
+  recommendation_interactions: data/processed/features/als_ready
+  product_lookup: data/processed/silver/products
+  customer_lookup: data/processed/silver/customers
+  classification_inference_base: data/processed/gold/classification_base_train
+  regression_inference_base: data/processed/gold/regression_base_train
+  pattern_baskets: data/processed/features/fpgrowth_ready
+  association_rules: reports/association_rules/association_rules
+  frequent_itemsets: reports/association_rules/frequent_itemsets
+  order_payments: data/processed/silver/order_payments
+  order_reviews: data/processed/silver/order_reviews
+  order_items: data/processed/silver/order_items
+
+models:
+  classification:
+    logistic_regression: models/classification/logistic_regression
+    random_forest_classifier: models/classification/random_forest
+    random_forest: models/classification/random_forest
+    naive_bayes: models/classification/naive_bayes
+    linear_svc: models/classification/linear_svc
+    gbt_classifier: models/classification/gbt_classifier
+    decision_tree_classifier: models/classification/decision_tree_classifier
+  regression:
+    linear_regression: models/regression/linear_regression
+    decision_tree_regressor: models/regression/decision_tree
+    decision_tree: models/regression/decision_tree
+    random_forest_regressor: models/regression/random_forest
+    random_forest: models/regression/random_forest
+  clustering:
+    kmeans: models/clustering/kmeans
+    bisecting_kmeans: models/clustering/bisecting_kmeans
+    gaussian_mixture: models/clustering/gaussian_mixture
+  recommendation:
+    als: models/recommendation/als
+  pattern_mining:
+    fpgrowth: models/pattern/fpgrowth
+
+pipelines:
+  classification_fe_pipeline: data/processed/features/models/classification_fe_pipeline
+  regression_fe_pipeline: data/processed/features/models/regression_fe_pipeline
+  clustering_fe_pipeline: data/processed/features/models/clustering_fe_pipeline
+
+metrics:
+  classification:
+    logistic_regression: reports/model_metrics/classification_logistic_regression.json
+    random_forest_classifier: reports/model_metrics/classification_random_forest.json
+    random_forest: reports/model_metrics/classification_random_forest.json
+    naive_bayes: reports/model_metrics/classification_naive_bayes.json
+    linear_svc: reports/model_metrics/classification_linear_svc.json
+    gbt_classifier: reports/model_metrics/classification_gbt_classifier.json
+    decision_tree_classifier: reports/model_metrics/classification_decision_tree.json
+  regression:
+    linear_regression: reports/model_metrics/regression_linear_regression.json
+    decision_tree_regressor: reports/model_metrics/regression_decision_tree.json
+    decision_tree: reports/model_metrics/regression_decision_tree.json
+    random_forest_regressor: reports/model_metrics/regression_random_forest.json
+    random_forest: reports/model_metrics/regression_random_forest.json
+  clustering:
+    kmeans: reports/model_metrics/clustering_kmeans.json
+    bisecting_kmeans: reports/model_metrics/clustering_bisecting_kmeans.json
+    gaussian_mixture: reports/model_metrics/clustering_gaussian_mixture.json
+  recommendation:
+    als: reports/model_metrics/recommendation_als.json
+  pattern_mining:
+    fpgrowth: reports/model_metrics/pattern_fpgrowth.json
+
+scripts:
+  preprocessing:
+    - src/nhom03_pyspark_project/data/run_data_pipeline.py
+  reporting:
+    - src/nhom03_pyspark_project/reports/evaluate_recommendation_ranking.py
+    - src/nhom03_pyspark_project/reports/generate_model_report.py
+  retrain:
+    classification: notebooks/04_00A_Run_Classification.ipynb
+    regression: notebooks/04_00B_Run_Regression.ipynb
+    clustering: notebooks/04_00C_Run_Clustering.ipynb
+    recommendation: src/nhom03_pyspark_project/models/train_recommendation_als.py
+    pattern_mining: notebooks/04_13_PatternMining_FPGrowth.ipynb
