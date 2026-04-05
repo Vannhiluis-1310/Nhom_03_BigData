@@ -1,0 +1,7 @@
+{
+  "model_family": "pattern_mining",
+  "model_name": "FPGrowth",
+  "transactions": 3236,
+  "freq_itemsets": 66,
+  "rules": 18
+}

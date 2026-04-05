@@ -1,0 +1,16 @@
+notebook,status,message
+04_01_Classification_LogisticRegression.ipynb,ok,executed
+04_02_Classification_RandomForest.ipynb,ok,executed
+04_03_Classification_NaiveBayes.ipynb,ok,executed
+04_04_Classification_LinearSVC.ipynb,ok,executed
+04_05_Classification_GBTClassifier.ipynb,ok,executed
+04_06_Regression_LinearRegression.ipynb,ok,executed
+04_07_Regression_DecisionTreeRegressor.ipynb,ok,executed
+04_08_Regression_RandomForestRegressor.ipynb,ok,executed
+04_09_Clustering_KMeans.ipynb,ok,executed
+04_10_Clustering_BisectingKMeans.ipynb,ok,executed
+04_11_Clustering_GaussianMixture.ipynb,ok,executed
+04_12_Recommendation_ALS.ipynb,ok,executed
+04_13_PatternMining_FPGrowth.ipynb,ok,executed
+04_14_Model_Comparison_Summary.ipynb,ok,executed
+04_15_Model_Evaluation_Visualization.ipynb,ok,executed

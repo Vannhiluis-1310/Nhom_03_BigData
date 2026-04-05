@@ -1,0 +1,20 @@
+{
+  "model_family": "classification",
+  "model_name": "GBTClassifier_CV",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "best_maxIter": 10,
+  "best_maxDepth": 5,
+  "best_stepSize": 0.1,
+  "cv_avg_accuracy": 0.7714802330648376,
+  "val_f1": 0.6674715852898907,
+  "val_accuracy": 0.7681836931115084,
+  "test_f1": 0.6786282662928452,
+  "test_accuracy": 0.7763675851771413,
+  "train_rows": 68887,
+  "val_rows": 14546,
+  "test_rows": 14734,
+  "training_time_seconds": 19.704508066177368,
+  "total_combinations": 3,
+  "note": "Small grid due to GBT computational cost"
+}

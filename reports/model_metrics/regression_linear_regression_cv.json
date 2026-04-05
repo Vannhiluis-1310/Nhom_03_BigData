@@ -1,0 +1,20 @@
+{
+  "model_family": "regression",
+  "model_name": "LinearRegression_CV",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "best_regParam": 1.0,
+  "best_maxIter": 10,
+  "cv_avg_r2": 0.14006612346436156,
+  "val_rmse": 195.5181519062605,
+  "val_mae": 97.89796355268689,
+  "val_r2": 0.15350854787808166,
+  "test_rmse": 202.18406087925254,
+  "test_mae": 97.65035875302073,
+  "test_r2": 0.15037168231485643,
+  "train_rows": 69294,
+  "val_rows": 14611,
+  "test_rows": 14761,
+  "training_time_seconds": 3.621799945831299,
+  "total_combinations": 9
+}

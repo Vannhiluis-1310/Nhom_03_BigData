@@ -1,0 +1,10 @@
+{
+  "model_family": "clustering",
+  "model_name": "GaussianMixture",
+  "val_silhouette": 0.5881757354410625,
+  "test_silhouette": 0.5801550834935444,
+  "train_rows": 65592,
+  "val_rows": 13799,
+  "test_rows": 13967,
+  "k": 6
+}

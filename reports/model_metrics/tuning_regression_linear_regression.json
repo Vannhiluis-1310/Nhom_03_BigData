@@ -1,0 +1,18 @@
+{
+  "model_family": "regression",
+  "model_name": "LinearRegression",
+  "tuning_method": "TrainValidationSplit",
+  "metric": "rmse",
+  "avgMetrics": [
+    186.54042015967866,
+    186.54042015967866,
+    186.54042052312667,
+    186.54042052312667,
+    186.5404226199237,
+    186.5404226199237
+  ],
+  "bestParams": {
+    "regParam": 0.01,
+    "maxIter": 80
+  }
+}

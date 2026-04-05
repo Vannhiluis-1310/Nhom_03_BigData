@@ -1,0 +1,16 @@
+{
+  "model_family": "regression",
+  "model_name": "DecisionTreeRegressor",
+  "val_rmse": 194.38455416123435,
+  "val_mae": 96.09815310222135,
+  "val_r2": 0.16329586437762,
+  "rmse": 201.3143605130648,
+  "mae": 95.52489007733966,
+  "r2": 0.15766536124191344,
+  "test_rmse": 201.3143605130648,
+  "test_mae": 95.52489007733966,
+  "test_r2": 0.15766536124191344,
+  "train_rows": 69294,
+  "val_rows": 14611,
+  "test_rows": 14761
+}

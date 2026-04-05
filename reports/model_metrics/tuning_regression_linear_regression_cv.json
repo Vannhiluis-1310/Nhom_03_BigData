@@ -1,0 +1,23 @@
+{
+  "model_family": "regression",
+  "model_name": "LinearRegression",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "metric": "r2",
+  "avgMetrics": [
+    0.1400607081855337,
+    0.1400607081855337,
+    0.1400607081855337,
+    0.14006142992785595,
+    0.14006142992785595,
+    0.14006142992785595,
+    0.14006612346436156,
+    0.14006612346436156,
+    0.14006612346436156
+  ],
+  "bestParams": {
+    "regParam": 1.0,
+    "maxIter": 10
+  },
+  "note": "Regression uses R2 metric for CV optimization"
+}

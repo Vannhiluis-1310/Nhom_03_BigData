@@ -1,0 +1,6 @@
+metric,CrossValidator_CV,TrainValidationSplit
+CV/Val R2,0.1401 (avg 3 folds),0.15354459175875768
+Test R2,0.1504,0.15042694039845395
+Test RMSE,202.18,202.1774859539779
+Best regParam,1.0,0.01
+Best maxIter,10,80

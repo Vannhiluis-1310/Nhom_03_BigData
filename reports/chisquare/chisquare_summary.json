@@ -1,0 +1,42 @@
+{
+  "test_method": "ChiSquareTest",
+  "library": "PySpark MLlib (pyspark.ml.stat)",
+  "feature_tested": "customer_state",
+  "total_tests": 2,
+  "significant_results": 2,
+  "alpha": 0.05,
+  "execution_timestamp": "2026-04-03T00:15:33.385311",
+  "dataset_info": {
+    "source": "classification_base_train + classification_base_val + classification_base_test",
+    "total_rows": 98167,
+    "distinct_states": 27
+  },
+  "results": [
+    {
+      "test_id": 1,
+      "target": "is_low_review",
+      "target_type": "binary",
+      "p_value": 0.0,
+      "chi2_statistic": 634.7253511051429,
+      "degrees_of_freedom": 26,
+      "significant_at_05": true,
+      "interpretation": "Significant association"
+    },
+    {
+      "test_id": 2,
+      "target": "review_score",
+      "target_type": "multiclass",
+      "p_value": 0.0,
+      "chi2_statistic": 1011.3209249051063,
+      "degrees_of_freedom": 104,
+      "significant_at_05": true,
+      "interpretation": "Significant association"
+    }
+  ],
+  "summary": {
+    "significant_tests": 2,
+    "total_tests": 2,
+    "significance_rate": 1.0,
+    "conclusion": "2/2 tests show significant association between customer_state and review outcomes"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "model_family": "classification",
+  "model_name": "GBTClassifier",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "metric": "accuracy",
+  "avgMetrics": [
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376
+  ],
+  "bestParams": {
+    "maxIter": 10,
+    "maxDepth": 5,
+    "stepSize": 0.1
+  },
+  "parallelism": 1,
+  "note": "GBT is slowest - only maxIter tuned, parallelism=1 required"
+}

@@ -1,0 +1,10 @@
+{
+  "model_family": "clustering",
+  "model_name": "KMeans",
+  "val_silhouette": 0.4963876908996341,
+  "test_silhouette": 0.4833308172699488,
+  "train_rows": 65592,
+  "val_rows": 13799,
+  "test_rows": 13967,
+  "k": 6
+}

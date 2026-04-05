@@ -1,0 +1,5 @@
+model_name,model_type,best_regParam,best_maxIter,best_numTrees,best_maxBins,cv_avg_metric,test_metric,total_combinations,training_method
+logistic_regression_cv,classification,0.01,100,,,TBD,TBD,9,3-fold CrossValidator
+random_forest_cv,classification,,,50,32,TBD,TBD,4,3-fold CrossValidator
+linear_regression_cv,regression,0.01,100,,,TBD,TBD,9,3-fold CrossValidator
+gbt_classifier_cv,classification,,,30,,TBD,TBD,3,3-fold CrossValidator

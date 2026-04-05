@@ -1,0 +1,16 @@
+{
+  "model_family": "regression",
+  "model_name": "RandomForestRegressor",
+  "val_rmse": 194.9082525698883,
+  "val_mae": 96.81521006812393,
+  "val_r2": 0.15878140194708878,
+  "rmse": 201.4792682615533,
+  "mae": 96.71126166123081,
+  "r2": 0.1562847900614347,
+  "test_rmse": 201.4792682615533,
+  "test_mae": 96.71126166123081,
+  "test_r2": 0.1562847900614347,
+  "train_rows": 69294,
+  "val_rows": 14611,
+  "test_rows": 14761
+}

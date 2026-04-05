@@ -1,0 +1,60 @@
+{
+  "model_family": "classification",
+  "model_name": "LogisticRegression",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "metric": "accuracy",
+  "avgMetrics": [
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376
+  ],
+  "bestParams": {
+    "regParam": 0.01,
+    "maxIter": 10
+  },
+  "allParams": [
+    {
+      "regParam": 0.01,
+      "maxIter": 10
+    },
+    {
+      "regParam": 0.01,
+      "maxIter": 50
+    },
+    {
+      "regParam": 0.01,
+      "maxIter": 100
+    },
+    {
+      "regParam": 0.1,
+      "maxIter": 10
+    },
+    {
+      "regParam": 0.1,
+      "maxIter": 50
+    },
+    {
+      "regParam": 0.1,
+      "maxIter": 100
+    },
+    {
+      "regParam": 1.0,
+      "maxIter": 10
+    },
+    {
+      "regParam": 1.0,
+      "maxIter": 50
+    },
+    {
+      "regParam": 1.0,
+      "maxIter": 100
+    }
+  ]
+}

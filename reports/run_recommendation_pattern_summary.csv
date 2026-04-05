@@ -1,0 +1,54 @@
+notebook,status,message
+04_12_Recommendation_ALS.ipynb,failed,"[NbConvertApp] Converting notebook C:\Users\vanhi\Desktop\HCMUTE_TMDT\HKII_Nam_3\BigData\Nhom03_PySpark_ProjectCuoiKy\notebooks\04_12_Recommendation_ALS.ipynb to notebook
+C:\Users\vanhi\AppData\Roaming\Python\Python310\site-packages\zmq\_future.py:718: RuntimeWarning: Proactor event loop does not implement add_reader family of methods required for zmq. Registering an additional selector thread for add_reader support via tornado. Use `asyncio.set_event_loop_policy(WindowsSelectorEventLoopPolicy())` to avoid this warning.
+  self._get_loop()
+Setting default log level to ""WARN"".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+
+[Stage 0:>                                                          (0 + 0) / 1]
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 3:>                                                          (0 + 1) / 1]
+
+                                                                                
+
+[Stage 5:>                                                          (0 + 1) / 1]
+
+                                
+...
+utStream.java:2379)
+
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2250)
+
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1709)
+
+	at java.base/java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2518)
+
+	at java.base/java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2412)
+
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2250)
+
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1709)
+
+	at java.base/java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2518)
+
+	at java.base/java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2412)
+
+	at java.base/java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2250)
+
+	at java.base/java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1709)
+
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:500)
+
+	at java.base/java.io.ObjectInputStream.readObject(ObjectInputStream.java:458)
+
+	at scala.collection.immutable.List$SerializationProxy.readObject(List.scala:527)
+
+	at jdk.internal.reflect.GeneratedMethodAccessor18.invoke(Unknown Source)
+
+
+
+"

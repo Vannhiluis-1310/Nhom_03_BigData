@@ -1,0 +1,19 @@
+{
+  "model_family": "classification",
+  "model_name": "LinearSVC",
+  "val_f1": 0.8569156040830088,
+  "val_accuracy": 0.8651112898900509,
+  "val_precision": 0.855536792813949,
+  "val_recall": 0.8651112898900509,
+  "f1": 0.8634596296409321,
+  "accuracy": 0.8712791633145616,
+  "precision": 0.8614869438322976,
+  "recall": 0.8712791633145615,
+  "test_f1": 0.8634596296409321,
+  "test_accuracy": 0.8712791633145616,
+  "test_precision": 0.8614869438322976,
+  "test_recall": 0.8712791633145615,
+  "train_rows": 105187,
+  "val_rows": 14916,
+  "test_rows": 14916
+}

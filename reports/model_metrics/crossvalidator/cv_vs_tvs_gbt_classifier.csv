@@ -1,0 +1,5 @@
+metric,CrossValidator_CV,TrainValidationSplit
+CV Avg Accuracy,0.7715 (3 folds),N/A (single split)
+Test Accuracy,0.7764,0.7763675851771413
+Test F1-Score,0.6786,0.6786282662928452
+Training Time,19.70s,faster (single split)

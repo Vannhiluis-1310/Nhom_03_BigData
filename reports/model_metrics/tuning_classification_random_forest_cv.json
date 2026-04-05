@@ -1,0 +1,19 @@
+{
+  "model_family": "classification",
+  "model_name": "RandomForest",
+  "tuning_method": "CrossValidator",
+  "num_folds": 3,
+  "metric": "accuracy",
+  "avgMetrics": [
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376,
+    0.7714802330648376
+  ],
+  "bestParams": {
+    "numTrees": 10,
+    "maxBins": 16
+  },
+  "parallelism": 1,
+  "note": "RF runs sequentially to avoid OOM"
+}

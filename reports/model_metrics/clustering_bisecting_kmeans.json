@@ -1,0 +1,10 @@
+{
+  "model_family": "clustering",
+  "model_name": "BisectingKMeans",
+  "val_silhouette": 0.4096562018097793,
+  "test_silhouette": 0.4108063954164002,
+  "train_rows": 65592,
+  "val_rows": 13799,
+  "test_rows": 13967,
+  "k": 6
+}

@@ -1,0 +1,19 @@
+{
+  "model_family": "classification",
+  "model_name": "NaiveBayes",
+  "val_f1": 0.8550965592506033,
+  "val_accuracy": 0.866519174041298,
+  "val_precision": 0.8564605568177333,
+  "val_recall": 0.8665191740412979,
+  "f1": 0.8607874099150912,
+  "accuracy": 0.8713462054170019,
+  "precision": 0.8603686965826592,
+  "recall": 0.8713462054170018,
+  "test_f1": 0.8607874099150912,
+  "test_accuracy": 0.8713462054170019,
+  "test_precision": 0.8603686965826592,
+  "test_recall": 0.8713462054170018,
+  "train_rows": 105187,
+  "val_rows": 14916,
+  "test_rows": 14916
+}

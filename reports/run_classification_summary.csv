@@ -1,0 +1,19 @@
+notebook,status,message
+04_01_Classification_LogisticRegression.ipynb,failed,"[NbConvertApp] Converting notebook /Users/thuannguyen/Downloads/Vannhi/Nhom03_BigDataCuoiKy_Update_01/notebooks/04_01_Classification_LogisticRegression.ipynb to notebook
+26/04/07 23:37:07 WARN Utils: Your hostname, Genius-Macbook.local resolves to a loopback address: 127.0.0.1; using 192.168.2.19 instead (on interface en0)
+26/04/07 23:37:07 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to ""WARN"".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/04/07 23:37:07 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/04/07 23:37:07 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+
+[Stage 0:>                                                          (0 + 1) / 1]
+
+                                                                                
+Traceback (most recent call last):
+  File ""/Users/thuannguyen/Downloads/Vannhi/Nhom03_BigDataCuoiKy_Update_01/.venv/bin/jupyter-nbconvert"", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File ""/Users/thuannguyen/Downloads/Vannhi/Nhom03_BigDataCuoiKy_Update_01/.venv/lib/python3.12/site-packages/jupyter_core/application.py"", line 284, in launch_instance
+    super().launch_instance(argv=argv, **kwargs)
+  File ""/Users/thuannguyen/Downloads/Vannhi/Nhom03_BigDataCuoiKy_Update_01/.venv/lib/python3.12/site-packages/traitlets/config/appl"

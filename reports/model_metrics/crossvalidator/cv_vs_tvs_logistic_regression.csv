@@ -1,0 +1,5 @@
+metric,CrossValidator_CV,TrainValidationSplit
+Validation Accuracy,0.7715 (avg across 3 folds),0.7681836931115084
+Test Accuracy,0.7764,0.7763675851771413
+Best regParam,0.01,0.01
+Best maxIter,10,80

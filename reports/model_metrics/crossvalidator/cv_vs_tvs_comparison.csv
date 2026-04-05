@@ -1,0 +1,5 @@
+model_name,model_type,tvs_method,tvs_val_metric,tvs_test_metric,cv_method,cv_avg_metric,cv_test_metric,winner,notes
+LogisticRegression,classification,TrainValidationSplit,0.8072,0.8207,CrossValidator (3-fold),TBD,TBD,TBD,CV uses accuracy metric; TVS used f1
+RandomForest,classification,TrainValidationSplit (fixed params),0.8089,0.8261,CrossValidator (3-fold),TBD,TBD,TBD,TVS used fixed params (numTrees=120); CV tunes 4 combos
+LinearRegression,regression,TrainValidationSplit,0.2590 (r2),0.1888 (r2),CrossValidator (3-fold),TBD,TBD,TBD,CV uses r2 metric; TVS used rmse
+GBTClassifier,classification,TrainValidationSplit (fixed params),0.8079,0.8236,CrossValidator (3-fold),TBD,TBD,TBD,TVS used fixed params (maxIter=60); CV tunes 3 values

@@ -1,0 +1,19 @@
+{
+  "model_family": "classification",
+  "model_name": "LogisticRegression",
+  "val_f1": 0.8572295603107848,
+  "val_accuracy": 0.86289890050952,
+  "val_precision": 0.8548811666931689,
+  "val_recall": 0.86289890050952,
+  "f1": 0.8638462857075265,
+  "accuracy": 0.8685974792169483,
+  "precision": 0.8612952012761012,
+  "recall": 0.8685974792169483,
+  "test_f1": 0.8638462857075265,
+  "test_accuracy": 0.8685974792169483,
+  "test_precision": 0.8612952012761012,
+  "test_recall": 0.8685974792169483,
+  "train_rows": 105187,
+  "val_rows": 14916,
+  "test_rows": 14916
+}
